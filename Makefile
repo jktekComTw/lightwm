@@ -1,5 +1,5 @@
-CC = cl
-LD = link
+CC = gcc
+LD = gcc
 
 EXEC = wm.exe
 DLL = wm_dll.dll
@@ -10,14 +10,14 @@ LDFLAGS =
 
 all: $(DLL) $(EXEC)
 
-$(EXEC): wm.c
-	$(CC) wm.c tiling.c error.c user32.lib /link /out:$(EXEC)
+$(EXEC): wm.c tiling.c error.c
+	$(CC) wm.c tiling.c error.c -luser32 -o $(EXEC)
 
-$(DLL): wm_dll.obj
-	$(LD) wm_dll.obj user32.lib /dll /out:$(DLL)
+$(DLL): wm_dll.o
+	$(LD) -shared wm_dll.o -luser32 -o $(DLL) -Wl,--out-implib,libwm_dll.a
 
-wm_dll.obj: wm_dll.c
-	$(CC) /c wm_dll.c
+wm_dll.o: wm_dll.c
+	$(CC) -c wm_dll.c -o wm_dll.o
 
 clean:
-	del *.obj $(DLL) $(EXEC) *.lib *.exp
+	del *.o $(DLL) $(EXEC) libwm_dll.a *.exp
