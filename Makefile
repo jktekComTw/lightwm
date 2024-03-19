@@ -20,4 +20,4 @@ wm_dll.o: wm_dll.c
 	$(CC) -c wm_dll.c -o wm_dll.o
 
 clean:
-	del *.o $(DLL) $(EXEC) libwm_dll.a *.exp
+	rm *.o $(DLL) $(EXEC) libwm_dll.a
